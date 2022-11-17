@@ -7,7 +7,7 @@
 [ext_resource path="res://asset/card_glow.png" type="Texture" id=5]
 [ext_resource path="res://src/CardStateMachine.gd" type="Script" id=6]
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
 
 uniform sampler2D n;
@@ -23,17 +23,17 @@ void fragment(){
 
 [sub_resource type="OpenSimplexNoise" id=5]
 
-[sub_resource type="NoiseTexture" id=6]
+[sub_resource type="NoiseTexture" id=10]
 width = 64
 height = 64
 seamless = true
 noise = SubResource( 5 )
 
 [sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 4 )
+shader = SubResource( 9 )
 shader_param/intensity = 3.0
 shader_param/speed = 5.0
-shader_param/n = SubResource( 6 )
+shader_param/n = SubResource( 10 )
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;

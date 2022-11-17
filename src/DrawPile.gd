@@ -19,7 +19,7 @@ func draw_card(num):
 		var c = current_cards.pop_front()
 		var original_position = c.global_position
 		y_sort.remove_child(c)
-		Game.current_hand.card_organizer.add_card(c)
+		Game.current_hand.card_organizer.add_card(c,Constants.CardState.IN_HAND)
 		c.global_position = original_position
 		rich_text_label.bbcode_text = draw_text % str(current_cards.size())
 		draw_timer.start()

@@ -39,14 +39,13 @@ func get_neighbour(neighbour_dir):
 		return get_parent().get_card(card_index - 1)
 		
 func change_index(index,need_repos):
-	card_index = index
 	if need_repos and "logic_container" in get_parent():
 		var time_elapsed = 0.2
 		var logic_container = get_parent().logic_container
 		self.z_index = 5 + card_index
 		var tween = check_tween()
 		self.z_index = 0
-		tween.parallel().tween_property(self,"scale",Vector2(1.0,1.0),time_elapsed)
+		tween.parallel().tween_property(self,"scale",logic_container.get_card_scale(),time_elapsed)
 		tween.parallel().tween_property(self,"position",logic_container.recalculate_position_use_oval(self),time_elapsed)
 		tween.parallel().tween_property(self,"rotation_degrees",logic_container.recalculate_rotation(self),time_elapsed)
 		yield(tween,"finished")
@@ -75,7 +74,23 @@ func check_tween():
 		current_tween.stop()
 	current_tween = create_tween()
 	return current_tween
-	
+
+func adapt_to_container():
+	var time_elapsed = 0.2
+	self.z_index = 4
+	var tween = check_tween()
+	if "logic_container" in get_parent():
+		var logic_container = get_parent().logic_container
+		if logic_container.has_method("get_card_scale"):
+			tween.parallel().tween_property(self,"scale",logic_container.get_card_scale(),time_elapsed)
+		else:
+			tween.parallel().tween_property(self,"scale",Vector2.ONE,time_elapsed)
+		tween.parallel().tween_property(self,"position", \
+			logic_container.recalculate_position_use_oval(self),time_elapsed)			
+		tween.parallel().tween_property(self,"rotation_degrees",
+				logic_container.recalculate_rotation(self),time_elapsed)
+	yield(tween,"finished")
+
 func hover_up(is_hover,no_rotation = false):
 	var time_elapsed = 0.2
 	if is_hover:

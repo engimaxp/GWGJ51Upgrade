@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/Hand.gd" type="Script" id=1]
 [ext_resource path="res://src/DrawPile.tscn" type="PackedScene" id=2]
@@ -22,6 +22,10 @@
 [ext_resource path="res://asset/map/barrelBlack/top.tres" type="Texture" id=20]
 [ext_resource path="res://src/CardOrganizer.tscn" type="PackedScene" id=21]
 [ext_resource path="res://src/Main.gd" type="Script" id=22]
+[ext_resource path="res://asset/icons/arrow_cross.png" type="Texture" id=23]
+[ext_resource path="res://asset/icons/sword.png" type="Texture" id=24]
+[ext_resource path="res://asset/icons/shield.png" type="Texture" id=25]
+[ext_resource path="res://src/Operator.tscn" type="PackedScene" id=26]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 300, 96 )
@@ -44,6 +48,21 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="CardOrganizer" parent="CanvasLayer/Control/Hand" instance=ExtResource( 21 )]
+
+[node name="Move" parent="CanvasLayer/Control" instance=ExtResource( 26 )]
+position = Vector2( 104, 84 )
+color = Color( 0.356863, 0.772549, 0.203922, 1 )
+texture = ExtResource( 23 )
+
+[node name="Attack" parent="CanvasLayer/Control" instance=ExtResource( 26 )]
+position = Vector2( 104, 205 )
+color = Color( 0.839216, 0.294118, 0.219608, 1 )
+texture = ExtResource( 24 )
+
+[node name="Defense" parent="CanvasLayer/Control" instance=ExtResource( 26 )]
+position = Vector2( 104, 331 )
+color = Color( 0.309804, 0.423529, 0.764706, 1 )
+texture = ExtResource( 25 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )

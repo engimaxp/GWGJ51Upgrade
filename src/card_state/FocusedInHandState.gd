@@ -18,7 +18,6 @@ func exited():
 func click(event):
 	if event.pressed:
 		state_machine.switch_to_state(Constants.CardState.DRAGGED)
-	pass
 	
 func mouse_enter_leave(is_enter):
 	if not is_enter:

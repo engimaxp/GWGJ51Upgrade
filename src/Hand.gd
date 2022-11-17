@@ -111,3 +111,6 @@ func _get_angle_by_index(c,index_diff = null) -> float:
 				* min(card_angle, 5)
 	else:
 		return 90 + (half - index) * card_angle
+
+func get_card_scale():
+	return Vector2.ZERO

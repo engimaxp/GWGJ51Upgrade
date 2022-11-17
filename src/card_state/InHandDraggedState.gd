@@ -5,6 +5,9 @@ var start_drag_position = Vector2.ZERO
 var in_hand_area = true
 var lock_swap_state = false
 
+var current_over_containers = []
+var current_container
+
 func entered():
 	started_pos = card.global_position
 	state_machine.set_monitoring(true)
@@ -26,8 +29,11 @@ func click(event):
 					state_machine.switch_to_state(Constants.CardState.IN_HAND)
 				_:
 					state_machine.switch_to_state(Constants.CardState.IN_HAND)
+		elif is_instance_valid(current_container):
+			card.get_parent().remove_card(card)
+			current_container.card_organizer.add_card(card,Constants.CardState.IN_CONTAINER)
 		else:
-			state_machine.switch_to_state(Constants.CardState.DESTORY)
+			state_machine.switch_to_state(Constants.CardState.IN_HAND)
 
 func click_move(event):
 	if start_drag_position == Vector2.ZERO:
@@ -43,7 +49,7 @@ func click_move(event):
 			var l_neighbour_pos = lcard.global_position
 			if n_position.x < l_neighbour_pos.x:
 				lock_swap_state = true
-				Game.current_hand.card_organizer.swap_card(lcard,card)
+				card.get_parent().swap_card(lcard,card)
 				card.change_index(lcard.card_index,false)
 				var aw = lcard.change_index(ci,true)
 				if aw is GDScriptFunctionState:
@@ -53,7 +59,7 @@ func click_move(event):
 			var r_neighbour_pos = rcard.global_position
 			if n_position.x > r_neighbour_pos.x:
 				lock_swap_state = true
-				Game.current_hand.card_organizer.swap_card(rcard,card)
+				card.get_parent().swap_card(rcard,card)
 				card.change_index(rcard.card_index,false)
 				var aw = rcard.change_index(ci,true)
 				if aw is GDScriptFunctionState:
@@ -68,4 +74,23 @@ func area_entered_exited(area,is_enter):
 	if "is_hand" in area:
 		in_hand_area = is_enter
 		print("area_entered_exited " + str(in_hand_area))
-	pass
+	
+	if area.has_method("glow"):
+		if is_enter:
+			if is_instance_valid(current_container) and current_container != area:
+				current_container.glow(false)
+			current_container = area
+			current_over_containers.append(current_container)
+			current_container.glow(true)
+		else:
+			current_container.glow(false)
+			if not current_over_containers.empty():
+				for a in range(current_over_containers.size() - 1,-1,-1):
+					if current_over_containers[a] == area:
+						current_over_containers[a].glow(false)
+						current_over_containers.remove(a)
+				if not current_over_containers.empty():
+					current_container = current_over_containers[current_over_containers.size() - 1]
+					current_container.glow(true)
+#		print(current_over_containers)
+#		print(current_container)

@@ -1,5 +1,11 @@
 extends Node
 
+enum OperatorType {
+	MOVE,
+	ATTACK,
+	DEFENSE,
+}
+
 enum CardState {
 	IN_HAND					#0
 	FOCUSED_IN_HAND			#1
@@ -18,17 +24,22 @@ enum CardState {
 	PREVIEW					#14
 	DECKBUILDER_GRID		#15
 	MOVING_TO_SPAWN_DESTINATION		#16
-	INITIALIZE
-	DESTORY
+	INITIALIZE		#17
+	DESTORY		#18
+	IN_CONTAINER		#19
+	FOCUSED_IN_CONTAINER		#20
+	DRAGGED_IN_CONTAINER		#21
 }
 const FOCUS_HOVER_COLOR := Color.green * 1
 
 const card_state_script_map = {
 	CardState.IN_HAND:"res://src/card_state/InHandState.gd",
 	CardState.FOCUSED_IN_HAND:"res://src/card_state/FocusedInHandState.gd",
+	CardState.FOCUSED_IN_CONTAINER:"res://src/card_state/FocusedInContainerState.gd",
 	CardState.DRAGGED:"res://src/card_state/InHandDraggedState.gd",
+	CardState.DRAGGED_IN_CONTAINER:"res://src/card_state/InContainerDraggedState.gd",
 	CardState.IN_PILE:"res://src/card_state/InPileState.gd",
-	CardState.MOVING_TO_CONTAINER:"res://src/card_state/MoveToContainerState.gd",
+	CardState.IN_CONTAINER:"res://src/card_state/InContainerState.gd",
 	CardState.INITIALIZE:"res://src/card_state/InitializeState.gd",
 	CardState.DESTORY:"res://src/card_state/DestoryState.gd",
 }
