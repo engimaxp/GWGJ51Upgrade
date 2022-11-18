@@ -36,6 +36,9 @@ func _unhandled_input(event):
 func initial_cards():
 	for i in range(20):
 		var card = CARD.instance()
+		card.card_data = {
+			"color":Color.gold
+		}
 		y_sort.add_child(card)
 		card.card_index = i
 		card.card_state_machine.switch_to_state(Constants.CardState.IN_PILE)

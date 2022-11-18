@@ -3,7 +3,8 @@ extends CardStateBase
 var lock_state = false
 
 func entered():
-	if last_state == Constants.CardState.DRAGGED:
+	if last_state == Constants.CardState.DRAGGED\
+	 or last_state == Constants.CardState.DRAGGED_IN_CONTAINER:
 		lock_state = true
 		var t = Timer.new()
 		card.add_child(t)
@@ -12,13 +13,13 @@ func entered():
 		t.start()
 		t.connect("timeout",self,"unlock_state",[t])
 		
+	state_machine.set_monitoring(false)
+	state_machine.set_mouse_listener(true)
 	var a1 = card.set_focus(false)
 	var a2 = card.hover_up(false)
 	for a in [a1,a2]:
 		if a is GDScriptFunctionState:
 			yield(a,"completed")
-	state_machine.set_monitoring(false)
-	state_machine.set_mouse_listener(true)
 
 
 func unlock_state(timer):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://src/Hand.gd" type="Script" id=1]
 [ext_resource path="res://src/DrawPile.tscn" type="PackedScene" id=2]
@@ -29,6 +29,10 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 300, 96 )
+
+[sub_resource type="Environment" id=2]
+tonemap_mode = 2
+glow_enabled = true
 
 [node name="Main" type="Node"]
 script = ExtResource( 22 )
@@ -141,3 +145,9 @@ position = Vector2( 930, 353 )
 texture = ExtResource( 4 )
 
 [node name="Players" parent="." instance=ExtResource( 11 )]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.843137, 0.843137, 0.843137, 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )

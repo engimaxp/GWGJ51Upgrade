@@ -9,7 +9,25 @@ signal focused(is_focus)
 export var card_index = -1
 var current_tween
 
+var card_data = {} setget set_card_data
+
+func set_card_data(val):
+	card_data = val
+	if !card_data.empty() and is_instance_valid(card):
+		if card.material.get("shader_param/Angle") < 90.0:
+			card.modulate = card_data["color"]
+		pass
+
+func _process(delta):
+	if !card_data.empty() and is_instance_valid(card):
+		if card.material.get("shader_param/Angle") < 90.0:
+			card.modulate = card_data["color"]
+		else:
+			card.modulate = Color.white
+		pass
+
 func _ready():
+	self.card_data = card_data
 	pass
 
 func show_card(is_show):
@@ -40,7 +58,7 @@ func get_neighbour(neighbour_dir):
 		
 func change_index(index,need_repos):
 	if need_repos and "logic_container" in get_parent():
-		var time_elapsed = 0.2
+		var time_elapsed = 0.1
 		var logic_container = get_parent().logic_container
 		self.z_index = 5 + card_index
 		var tween = check_tween()
