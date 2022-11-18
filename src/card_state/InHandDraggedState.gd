@@ -30,8 +30,10 @@ func click(event):
 				_:
 					state_machine.switch_to_state(Constants.CardState.IN_HAND)
 		elif is_instance_valid(current_container):
+			var original_postion = card.global_position
 			card.get_parent().remove_card(card)
-			current_container.card_organizer.add_card(card,Constants.CardState.IN_CONTAINER)
+			current_container.card_organizer.add_card(card,Constants.CardState.IN_CONTAINER,\
+				current_container.to_local(original_postion))
 		else:
 			state_machine.switch_to_state(Constants.CardState.IN_HAND)
 

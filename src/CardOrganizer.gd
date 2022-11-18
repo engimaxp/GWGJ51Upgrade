@@ -6,7 +6,7 @@ var logic_container
 func _ready():
 	logic_container = get_parent()
 
-func add_card(c,state):
+func add_card(c,state,pos):
 #	print("================")
 #	print("====add_card====")
 #	print(c)
@@ -15,6 +15,7 @@ func add_card(c,state):
 		if card_exist == c:
 			return 
 	self.add_child(c)
+	c.position = pos
 	var index = cards_in_hand.size()
 	cards_in_hand[index] = c
 	c.card_index = index

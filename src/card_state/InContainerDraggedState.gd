@@ -28,14 +28,14 @@ func click(event):
 				Constants.CardState.FOCUSED_IN_HAND,Constants.CardState.IN_HAND,_:
 					var original_postion = card.global_position
 					card.get_parent().remove_card(card)
-					Game.current_hand.card_organizer.add_card(card,Constants.CardState.IN_HAND)
-					card.position = Game.current_hand.to_local(original_postion)
+					Game.current_hand.card_organizer.add_card(card,\
+						Constants.CardState.IN_HAND,Game.current_hand.to_local(original_postion))
 		elif is_instance_valid(current_container) and \
 					current_container != card.get_parent().logic_container:
 			var original_postion = card.global_position
 			card.get_parent().remove_card(card)
-			current_container.card_organizer.add_card(card,Constants.CardState.IN_CONTAINER)
-			card.position = current_container.to_local(original_postion)
+			current_container.card_organizer.add_card(card,Constants.CardState.IN_CONTAINER\
+				,current_container.to_local(original_postion))
 		else:
 			state_machine.switch_to_state(Constants.CardState.IN_CONTAINER)
 
