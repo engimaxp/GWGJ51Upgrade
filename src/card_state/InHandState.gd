@@ -17,8 +17,8 @@ func entered():
 	for a in [a1,a2]:
 		if a is GDScriptFunctionState:
 			yield(a,"completed")
-			state_machine.set_monitoring(false)
-			state_machine.set_mouse_listener(true)
+	state_machine.set_monitoring(false)
+	state_machine.set_mouse_listener(true)
 
 
 func unlock_state(timer):
