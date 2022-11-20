@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://src/Players.gd" type="Script" id=1]
 [ext_resource path="res://asset/tanks/t8.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/tank/FireProxy.gd" type="Script" id=12]
 [ext_resource path="res://src/tank/HealthProxy.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/tank/BoostCollector.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/tank/UpgradableProxy.tscn" type="PackedScene" id=15]
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -295,9 +296,13 @@ texture = ExtResource( 2 )
 [node name="FireProxy" type="Node2D" parent="Player/Base/Turrent"]
 script = ExtResource( 12 )
 explode = true
+current_fire_ammo_amount = 1
 
 [node name="StartPoint" type="Position2D" parent="Player/Base/Turrent/FireProxy"]
 position = Vector2( 0, -226.667 )
+
+[node name="Timer" type="Timer" parent="Player/Base/Turrent/FireProxy"]
+one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 2 )
@@ -316,8 +321,12 @@ oil_path = NodePath("../OilProxy")
 
 [node name="OilProxy" type="Node2D" parent="."]
 script = ExtResource( 11 )
+oil = 64
 
 [node name="HealthProxy" parent="." instance=ExtResource( 13 )]
 animation_tree_nodepath = NodePath("../AnimationTree")
+
+[node name="UpgradableProxy" parent="." instance=ExtResource( 15 )]
+sprite_nodepath = NodePath("../Player/Base")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

@@ -51,14 +51,25 @@ func has_card():
 	return not card_organizer.cards_in_hand.empty()
 
 func is_valid_card()->String:
-	if card_organizer.cards_in_hand.size() > 1:
-		for index in range(card_organizer.cards_in_hand.size() - 1):
-			var c = card_organizer.cards_in_hand[index]
-			var c_next = card_organizer.cards_in_hand[index + 1]
+	var a = get_duplicate_array()[0]
+	if a.size() > 1:
+		for index in range(a.size() - 1):
+			var c = a[index]
+			var c_next = a[index + 1]
 			if c.card_data["special"] != "none" and \
 				c_next.card_data["special"] != "none":
 					return "Error! Operators can't be neighbour"
 	return ""
+
+func get_duplicate_array():
+	var result = []
+	var has_upgrade = false
+	for i in range(card_organizer.cards_in_hand.size()-1,-1,-1):
+		if card_organizer.cards_in_hand[i].card_data["special"] == "upgrade":
+			has_upgrade = true
+		else:
+			result.append(card_organizer.cards_in_hand[i])
+	return [result,has_upgrade]
 
 func clear():
 	card_organizer.clear()
@@ -67,8 +78,11 @@ func get_damage_info():
 	var dmg_dic = {}
 	var command = ""
 	var opt = Constants.OperatorState.PLUS
-	for index in range(card_organizer.cards_in_hand.size()):
-		var c = card_organizer.cards_in_hand[index]
+	var a = get_duplicate_array()
+	if a[1]:
+		dmg_dic["upgrade"] = true
+	for index in range(a[0].size()):
+		var c = a[0][index]
 		if index == 0:
 			match c.card_data["special"]:
 				"none","plus","minus":

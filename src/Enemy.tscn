@@ -191,6 +191,8 @@ texture = ExtResource( 7 )
 [node name="FireProxy" type="Node2D" parent="KinematicBody2D/Base/Turrent"]
 script = ExtResource( 9 )
 fire_to_layer = 4
+speed = 500
+is_enemy = true
 
 [node name="StartPoint" type="Position2D" parent="KinematicBody2D/Base/Turrent/FireProxy"]
 position = Vector2( 0, -42 )

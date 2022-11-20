@@ -30,7 +30,98 @@ var wave_data = {
 		"type":Constants.EnemyType.SMALL_BLUE
 	}],
 	2: [{
-		"num":3,
+		"num":2,
 		"type":Constants.EnemyType.SMALL_BLUE
+	},{
+		"num":1,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	3: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_BLUE
+	},{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	4: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_BLUE
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	5: [{
+		"num":4,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	6: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_BLUE
+	},{
+		"num":1,
+		"type":Constants.EnemyType.SMALL_GREEN
+	}],
+	7: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_GREEN
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	8: [{
+		"num":4,
+		"type":Constants.EnemyType.SMALL_GREEN
+	}],
+	9: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_GREEN
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	10: [{
+		"num":2,
+		"type":Constants.EnemyType.SAND
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	11: [{
+		"num":2,
+		"type":Constants.EnemyType.SAND
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	},{
+		"num":1,
+		"type":Constants.EnemyType.SMALL_DARK
+	}],
+	12: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_DARK
+	},{
+		"num":3,
+		"type":Constants.EnemyType.BIG_RED
+	}],
+	13: [{
+		"num":4,
+		"type":Constants.EnemyType.BIG_RED
+	}],
+	14: [{
+		"num":3,
+		"type":Constants.EnemyType.BIG_RED
+	},{
+		"num":3,
+		"type":Constants.EnemyType.SMALL_RED
+	}],
+	15: [{
+		"num":2,
+		"type":Constants.EnemyType.SMALL_BLUE
+	},{
+		"num":3,
+		"type":Constants.EnemyType.BIG_RED
+	},{
+		"num":2,
+		"type":Constants.EnemyType.DARK_LARGE
 	}],
 }

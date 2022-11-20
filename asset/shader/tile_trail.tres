@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+uniform vec4 tint_color:hint_color = vec4(1.0);
+uniform vec4 tint_color2:hint_color = vec4(1.0);
+
+void fragment(){
+	vec4 tx = texture(TEXTURE,UV + vec2(TIME,0.));
+	tx.rgb = mix(tint_color.rgb,tint_color2.rgb,0.5 + sin(TIME*4.0)*0.5);
+	COLOR = tx;
+}"
+
+[resource]
+shader = SubResource( 5 )
+shader_param/tint_color = Color( 0.321569, 0.321569, 0.321569, 1 )
+shader_param/tint_color2 = Color( 0, 0, 0, 1 )

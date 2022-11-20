@@ -77,6 +77,7 @@ func _on_Confirm_pressed():
 	var move_dic = {}
 	var attack_dic = {}
 	var defense_dic = {}
+	var upgrade_dic = {}
 	var blast = false
 	if move.has_card():
 		var e = move.is_valid_card()
@@ -84,6 +85,8 @@ func _on_Confirm_pressed():
 			error_message = e
 		else:
 			move_dic = move.get_damage_info()
+			if move_dic.has("upgrade") and move_dic["upgrade"]:
+				upgrade_dic[0] = true
 			print("move----",move_dic)
 	if error_message.empty() and attack.has_card():
 		var e = attack.is_valid_card()
@@ -91,6 +94,8 @@ func _on_Confirm_pressed():
 			error_message = e
 		else:
 			attack_dic = attack.get_damage_info()
+			if attack_dic.has("upgrade") and attack_dic["upgrade"]:
+				upgrade_dic[1] = true
 			print("attack----",attack_dic)
 	if error_message.empty() and defense.has_card():
 		var e = defense.is_valid_card()
@@ -98,23 +103,30 @@ func _on_Confirm_pressed():
 			error_message = e
 		else:
 			defense_dic = defense.get_damage_info()
+			if defense_dic.has("upgrade") and defense_dic["upgrade"]:
+				upgrade_dic[2] = true
 			print("defense----",defense_dic)
 	if error_message.empty():
 		error_text.bbcode_text = ""
+		if not upgrade_dic.empty():
+			player.upgrade(upgrade_dic)
 		if not move_dic.empty():
-			player.resupply(move_dic)
-			if move_dic["damage"] == 24:
-				blast = true
+			if move_dic.has("damage"):
+				player.resupply(move_dic)
+				if move_dic["damage"] == 24:
+					blast = true
 			move.clear()
 		if not attack_dic.empty():
-			player.reload(attack_dic)
-			if attack_dic["damage"] == 24:
-				blast = true
+			if attack_dic.has("damage"):
+				player.reload(attack_dic)
+				if attack_dic["damage"] == 24:
+					blast = true
 			attack.clear()
 		if not defense_dic.empty():
-			player.repair(defense_dic)
-			if defense_dic["damage"] == 24:
-				blast = true
+			if defense_dic.has("damage"):
+				player.repair(defense_dic)
+				if defense_dic["damage"] == 24:
+					blast = true
 			defense.clear()
 		if blast:
 			SubPub.publish(SubPub.total_blast)

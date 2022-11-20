@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform bool moving = false;
+void fragment(){
+	vec2 uv = UV;
+	if (moving){
+		uv.y += TIME;
+	}
+	vec4 tx =  texture(TEXTURE,uv);
+	COLOR = tx;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/moving = false

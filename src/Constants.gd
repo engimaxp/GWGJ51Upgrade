@@ -49,10 +49,11 @@ const card_state_script_map = {
 }
 
 enum CardNumber{ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,\
-	EIGHT,NINE,PLUS,MINUS,MULTIPLY,DIVIDE}
+	EIGHT,NINE,PLUS,MINUS,MULTIPLY,DIVIDE,UPGRADE}
 enum CardFace{CLUB,DIAMOND,HEART,SPADE,SPECIAL}
 
-enum EnemyType {SMALL_BLUE}
+enum EnemyType {SMALL_BLUE,SMALL_RED,SMALL_GREEN,\
+SAND,SMALL_DARK,BIG_RED,DARK_LARGE}
 
 var enemy_dic = {
 	EnemyType.SMALL_BLUE:{
@@ -63,7 +64,55 @@ var enemy_dic = {
 			"max_health":5,
 			"health":5
 		}
-	}
+	},EnemyType.SMALL_RED:{
+		"base":"res://asset/map/tank/red.tres",
+		"turrent":"res://asset/map/tankRed/barrel1.tres",
+		"damage_data":{"damage":7,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":7,
+			"health":7
+		}
+	},EnemyType.SMALL_GREEN:{
+		"base":"res://asset/map/tank/green.tres",
+		"turrent":"res://asset/map/tankGreen/barrel1.tres",
+		"damage_data":{"damage":9,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":9,
+			"health":9
+		}
+	},EnemyType.SAND:{
+		"base":"res://asset/map/tank/dark.tres",
+		"turrent":"res://asset/map/tankSand/barrel3.tres",
+		"damage_data":{"damage":12,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":5,
+			"health":5
+		}
+	},EnemyType.SMALL_DARK:{
+		"base":"res://asset/map/tank/dark.tres",
+		"turrent":"res://asset/map/tankDark/barrel1.tres",
+		"damage_data":{"damage":5,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":15,
+			"health":15
+		}
+	},EnemyType.BIG_RED:{
+		"base":"res://asset/map/tank/bigRed.tres",
+		"turrent":"res://asset/map/tankRed/barrel3.tres",
+		"damage_data":{"damage":1,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":25,
+			"health":25
+		}
+	},EnemyType.DARK_LARGE:{
+		"base":"res://asset/map/tank/darkLarge.tres",
+		"turrent":"res://asset/map/tankDark/barrel3.tres",
+		"damage_data":{"damage":30,"opt":OperatorState.PLUS},
+		"health_data":{
+			"max_health":30,
+			"health":30
+		}
+	},
 }
 
 const card_display_dic = {
@@ -271,6 +320,11 @@ const card_display_dic = {
 			"image":"res://asset/cards/divide.png",
 			"number":-1,
 			"special":"divide",
+		},
+		CardNumber.UPGRADE:{
+			"image":"res://asset/cards/upgrade.png",
+			"number":-1,
+			"special":"upgrade",
 		},
 	}
 }

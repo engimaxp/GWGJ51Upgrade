@@ -9,6 +9,11 @@ func oil_spend(amount):
 	if "cam" in get_parent():
 		Game.emit_signal("OilChange",oil,max_oil)
 
+func set_oil_info(_oil,_max_oil):
+	oil = _oil
+	max_oil = _max_oil
+	Game.emit_signal("OilChange",oil,max_oil)
+	
 func add_oil(number):
 	if number + oil > max_oil:
 		number = max_oil - oil

@@ -8,6 +8,19 @@ onready var health_proxy = $HealthProxy
 onready var animation = $AnimationTree.get("parameters/playback")
 onready var collision_shape_2d = $Player/CollisionShape2D
 onready var boost_collector = $BoostCollector
+onready var upgradable_proxy = $UpgradableProxy
+
+onready var base = $Player/Base
+onready var tile_1 = $Player/Base/Tile/Tile1
+onready var tile_sprite_1 = $Player/Base/Tile/Tile1/Sprite
+onready var tile_2 = $Player/Base/Tile/Tile2
+onready var tile_sprite_2 = $Player/Base/Tile/Tile2/Sprite
+onready var wing_1 = $Player/Base/Wing/Wing1
+onready var wing_2 = $Player/Base/Wing/Wing2
+onready var turrent_image = $Player/Base/Turrent/TurrentImage
+onready var tile_node = $Player/Base/Tile
+onready var wing_node = $Player/Base/Wing
+
 
 onready var turrent = $Player/Base/Turrent
 var is_dead = false
@@ -39,6 +52,7 @@ func bound_in_edge():
 func _process(delta):
 	health_proxy.position = player.position
 	boost_collector.position = player.position
+	upgradable_proxy.position = player.position
 	bound_in_edge()
 	movement.move(movement.motion)
 	
@@ -97,3 +111,45 @@ func reload(op_dic):
 	fire_proxy.damage = op_dic
 	fire_proxy.can_fire = true
 	
+func upgrade(upgrade_dic):
+	var up = false
+	if upgrade_dic.has(0) and upgrade_dic[0]:
+		#upgrade_move
+		current_level[0] += 1
+		match current_level[0]:
+			1:
+				tile_1.texture = load("res://asset/tanks/tile1.png")
+				tile_2.texture = load("res://asset/tanks/tile1.png")
+				tile_sprite_1.texture = load("res://asset/tanks/tile11.png")
+				tile_sprite_2.texture = load("res://asset/tanks/tile11.png")
+			2:
+				tile_node.hide()
+				wing_node.show()
+			3:
+				wing_1.texture = load("res://asset/tanks/wing2.png")
+				wing_2.texture = load("res://asset/tanks/wing2.png")
+		oil_proxy.set_oil_info(oil_proxy.oil,64 + 24 * current_level[0])
+		up = true
+	if upgrade_dic.has(1) and upgrade_dic[1]:
+		#upgrade_attack
+		current_level[1] += 1
+		match current_level[1]:
+			1:
+				turrent_image.texture = load("res://asset/tanks/t7.png")
+			2:
+				turrent_image.texture = load("res://asset/tanks/t5.png")
+		fire_proxy.current_fire_ammo_amount = 1 + 1 * current_level[1]
+		up = true
+	if upgrade_dic.has(2) and upgrade_dic[2]:
+		#upgrade_defense
+		match current_level[2]:
+			1:
+				base.texture = load("res://asset/tanks/t6.png")
+			2:
+				base.texture = load("res://asset/tanks/t3.png")
+		health_proxy.max_health = 24 + 24 * current_level[2]
+		health_proxy.health = health_proxy.health
+		up = true
+	if up:
+		upgradable_proxy.add_level()
+var current_level = {0:0,1:0,2:0}

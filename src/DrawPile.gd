@@ -57,17 +57,23 @@ func initial_cards():
 	var cards = []
 	for x in Constants.card_display_dic.keys():
 		for y in Constants.card_display_dic[x].keys():
-			if x == Constants.CardFace.SPECIAL:
+			if x == Constants.CardFace.SPECIAL and \
+				Constants.card_display_dic[x][y].special != "upgrade":
 				for i in 4:
 					cards.append(Constants.card_display_dic[x][y])
 			else:
 				cards.append(Constants.card_display_dic[x][y])
 	cards.shuffle()
+	cards.insert(0,Constants.card_display_dic\
+		[Constants.CardFace.SPECIAL][Constants.CardNumber.UPGRADE])
 	var index = 0
 	for x in cards:
 		var card = CARD.instance()
 		if x["special"]!="none":
-			x["color"] = Color("#00C3F3")
+			if x["special"] == "upgrade":
+				x["color"] = Color.gold
+			else:
+				x["color"] = Color("#00C3F3")
 		else:
 			x["color"] = Color.white
 		card.card_data = x
