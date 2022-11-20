@@ -46,3 +46,69 @@ func recalculate_rotation(c):
 
 func re_position_card(c):
 	c.adapt_to_container()
+
+func has_card():
+	return not card_organizer.cards_in_hand.empty()
+
+func is_valid_card()->String:
+	if card_organizer.cards_in_hand.size() > 1:
+		for index in range(card_organizer.cards_in_hand.size() - 1):
+			var c = card_organizer.cards_in_hand[index]
+			var c_next = card_organizer.cards_in_hand[index + 1]
+			if c.card_data["special"] != "none" and \
+				c_next.card_data["special"] != "none":
+					return "Error! Operators can't be neighbour"
+	return ""
+
+func clear():
+	card_organizer.clear()
+
+func get_damage_info():
+	var dmg_dic = {}
+	var command = ""
+	var opt = Constants.OperatorState.PLUS
+	for index in range(card_organizer.cards_in_hand.size()):
+		var c = card_organizer.cards_in_hand[index]
+		if index == 0:
+			match c.card_data["special"]:
+				"none","plus","minus":
+					opt = Constants.OperatorState.PLUS
+				"multiply":
+					opt = Constants.OperatorState.MULTIPLY
+				"divide":
+					opt = Constants.OperatorState.DIVIDE
+			dmg_dic["opt"] = opt
+		match c.card_data["special"]:
+			"none":
+				command += "(%d)" % c.card_data["number"]
+			"plus":
+				command += "+"
+			"minus":
+				command += "-"
+			"multiply":
+				command += "*"
+			"divide":
+				command += "/"
+	if command.ends_with("+") or command.ends_with("-"):
+		command += "0"
+	elif command.ends_with("*") or command.ends_with("/"):
+		command += "1"
+	if command.begins_with("+") or command.begins_with("-"):
+		command.substr(1,command.length() - 1)
+	elif command.begins_with("*") or command.begins_with("/"):
+		command.substr(1,command.length() - 1)
+	print("command--",command)
+	var expression = Expression.new()
+	var error = expression.parse(command, [])
+	if error != OK:
+		print(expression.get_error_text())
+		return dmg_dic
+	var result = expression.execute([], null, true)
+	if not expression.has_execute_failed():
+		var dmg = int(result)
+		if dmg < 0 and opt == "plus":
+			opt = Constants.OperatorState.MINUS
+			dmg = -dmg
+		dmg_dic["damage"] = dmg
+	print("dmg_dic--",dmg_dic)
+	return dmg_dic

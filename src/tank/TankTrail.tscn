@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/tank/TankTrail.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+
+[node name="Trail" type="Line2D"]
+points = PoolVector2Array( 0, 39, 0, 0 )
+gradient = SubResource( 1 )
+script = ExtResource( 1 )

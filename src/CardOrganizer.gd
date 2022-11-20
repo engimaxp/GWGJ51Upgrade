@@ -26,6 +26,11 @@ func add_card(c,state,pos):
 #	print(cards_in_hand)
 	reorganize()
 
+func clear():
+	for ca in cards_in_hand.values():
+		ca.queue_free()
+	cards_in_hand.clear()
+
 func remove_card(c):
 #	print("================")
 #	print("====remove_card====")

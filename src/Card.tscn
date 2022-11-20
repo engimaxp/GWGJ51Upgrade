@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://asset/card.png" type="Texture" id=1]
-[ext_resource path="res://asset/cards/acid_ocean.png" type="Texture" id=2]
+[ext_resource path="res://asset/cards/plus.png" type="Texture" id=2]
 [ext_resource path="res://asset/light_texture.png" type="Texture" id=3]
 [ext_resource path="res://src/Card.gd" type="Script" id=4]
 [ext_resource path="res://asset/card_glow.png" type="Texture" id=5]

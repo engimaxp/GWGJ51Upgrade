@@ -2,6 +2,8 @@ tool
 extends Node
 
 const card_hover = "card_hover"
+const total_blast = "total_blast"
+const enemy_down = "enemy_down"
 
 var subscribers = {}
 var one_time_buffer = {}

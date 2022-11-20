@@ -16,6 +16,7 @@ func set_card_data(val):
 	if !card_data.empty() and is_instance_valid(card):
 		if card.material.get("shader_param/Angle") < 90.0:
 			card.modulate = card_data["color"]
+		card.texture = load(card_data["image"])
 		pass
 
 func _process(delta):

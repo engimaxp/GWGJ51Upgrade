@@ -1,0 +1,267 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://src/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://asset/map/tankBody/blue/outline.tres" type="Texture" id=2]
+[ext_resource path="res://src/tank/Movement.gd" type="Script" id=3]
+[ext_resource path="res://src/tank/TankTrail.tscn" type="PackedScene" id=4]
+[ext_resource path="res://asset/shader/tile_trail.tres" type="Material" id=5]
+[ext_resource path="res://asset/map/tracksSmall.png" type="Texture" id=6]
+[ext_resource path="res://asset/map/tankBlue/barrel3/outline.tres" type="Texture" id=7]
+[ext_resource path="res://src/tank/OilProxy.gd" type="Script" id=8]
+[ext_resource path="res://src/tank/FireProxy.gd" type="Script" id=9]
+[ext_resource path="res://src/tank/OffScreenMarker.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/tank/HealthProxy.tscn" type="PackedScene" id=11]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 41.0
+height = 2.0
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("KinematicBody2D/Base:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("KinematicBody2D/Base:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("KinematicBody2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "die"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("KinematicBody2D/Base:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2 ),
+"transitions": PoolRealArray( -2, -2, -2, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "hurt"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("KinematicBody2D/Base:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35, 0.5 ),
+"transitions": PoolRealArray( -2, -2, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 2, 2, 2, 1 ), Color( 1, 1, 1, 1 ), Color( 2, 2, 2, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("KinematicBody2D/Base:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("KinematicBody2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "recover"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("KinematicBody2D/Base:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 2, 2, 2, 1 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "RESET"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "die"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "hurt"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "recover"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=23]
+states/RESET/node = SubResource( 10 )
+states/RESET/position = Vector2( 309, 39 )
+states/die/node = SubResource( 17 )
+states/die/position = Vector2( 183, 86 )
+states/hurt/node = SubResource( 11 )
+states/hurt/position = Vector2( 467, 101 )
+states/recover/node = SubResource( 12 )
+states/recover/position = Vector2( 663, 54 )
+transitions = [ "RESET", "hurt", SubResource( 13 ), "hurt", "recover", SubResource( 14 ), "recover", "RESET", SubResource( 15 ), "RESET", "die", SubResource( 18 ), "die", "RESET", SubResource( 25 ) ]
+start_node = "RESET"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
+
+[node name="Enemy" type="Node2D" groups=["Enemy"]]
+script = ExtResource( 1 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+collision_layer = 96
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+shape = SubResource( 1 )
+
+[node name="Base" type="Sprite" parent="KinematicBody2D"]
+texture = ExtResource( 2 )
+
+[node name="Turrent" type="Position2D" parent="KinematicBody2D/Base"]
+
+[node name="Barrel1" type="Sprite" parent="KinematicBody2D/Base/Turrent"]
+position = Vector2( 0, -16 )
+texture = ExtResource( 7 )
+
+[node name="FireProxy" type="Node2D" parent="KinematicBody2D/Base/Turrent"]
+script = ExtResource( 9 )
+fire_to_layer = 4
+
+[node name="StartPoint" type="Position2D" parent="KinematicBody2D/Base/Turrent/FireProxy"]
+position = Vector2( 0, -42 )
+
+[node name="Timer" type="Timer" parent="KinematicBody2D/Base/Turrent/FireProxy"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Trail" type="Position2D" parent="KinematicBody2D/Base"]
+show_behind_parent = true
+position = Vector2( -29, 24 )
+
+[node name="Trail" parent="KinematicBody2D/Base/Trail" instance=ExtResource( 4 )]
+self_modulate = Color( 1, 1, 1, 0.258824 )
+show_behind_parent = true
+material = ExtResource( 5 )
+width = 20.0
+texture = ExtResource( 6 )
+texture_mode = 1
+is_emitting = true
+lifetime = 2.0
+
+[node name="Trail2" type="Position2D" parent="KinematicBody2D/Base"]
+show_behind_parent = true
+position = Vector2( 30, 24 )
+
+[node name="Trail" parent="KinematicBody2D/Base/Trail2" instance=ExtResource( 4 )]
+self_modulate = Color( 1, 1, 1, 0.258824 )
+show_behind_parent = true
+material = ExtResource( 5 )
+width = 20.0
+texture = ExtResource( 6 )
+texture_mode = 1
+is_emitting = true
+lifetime = 2.0
+
+[node name="OffScreenMarker" parent="KinematicBody2D" instance=ExtResource( 10 )]
+
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource( 3 )
+acceleration = 160
+decceleration = 100
+MASS = 40
+MAX_SPEED = 200
+skin_path = NodePath("../KinematicBody2D/Base")
+oil_path = NodePath("../OilProxy")
+is_ai = true
+
+[node name="OilProxy" type="Node2D" parent="."]
+script = ExtResource( 8 )
+max_oil = 30
+
+[node name="HealthProxy" parent="." instance=ExtResource( 11 )]
+scale = Vector2( 0.5, 0.5 )
+animation_tree_nodepath = NodePath("../AnimationTree")
+max_health = 5
+health = 5
+hurt_cool_down_time = 0.1
+shield_color = Color( 1, 0.439216, 0.270588, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RESET"
+anims/RESET = SubResource( 19 )
+anims/die = SubResource( 20 )
+anims/hurt = SubResource( 21 )
+anims/recover = SubResource( 22 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 23 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 24 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
