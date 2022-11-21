@@ -19,19 +19,20 @@ func _ready():
 func draw_card(num):
 	if is_drawing or stack_cards > 0:
 		stack_cards += num
+		return
 	elif current_cards.size() < num:
 		stack_cards += num - current_cards.size()
 		num = current_cards.size()
-	else:
-		for i in num:
-			var c = current_cards.pop_front()
-			var original_position = c.global_position
-			y_sort.remove_child(c)
-			Game.current_hand.card_organizer.add_card(c,Constants.CardState.IN_HAND,\
-				Game.current_hand.to_local(original_position))
-			rich_text_label.bbcode_text = draw_text % str(current_cards.size())
-			draw_timer.start()
-			yield(draw_timer,"timeout")
+
+	for i in num:
+		var c = current_cards.pop_front()
+		var original_position = c.global_position
+		y_sort.remove_child(c)
+		Game.current_hand.card_organizer.add_card(c,Constants.CardState.IN_HAND,\
+			Game.current_hand.to_local(original_position))
+		rich_text_label.bbcode_text = draw_text % str(current_cards.size())
+		draw_timer.start()
+		yield(draw_timer,"timeout")
 	
 	if not is_drawing:
 		if current_cards.size() <= 0:

@@ -120,7 +120,7 @@ func get_damage_info():
 	var result = expression.execute([], null, true)
 	if not expression.has_execute_failed():
 		var dmg = int(result)
-		if dmg < 0 and opt == "plus":
+		if dmg < 0 and opt == Constants.OperatorState.PLUS:
 			opt = Constants.OperatorState.MINUS
 			dmg = -dmg
 		dmg_dic["damage"] = dmg

@@ -38,13 +38,14 @@ func fire_bullet():
 	fire_amount -= 1
 	if is_instance_valid(timer):
 		if is_enemy:
-			timer.wait_time = rand_range(10,20)
+			timer.wait_time = rand_range(6,20)
 		timer.start()
 
 func _ready():
 	if is_instance_valid(timer) and is_enemy:
-		timer.wait_time = rand_range(10,20)
+		timer.wait_time = rand_range(5,20)
 		timer.start()
+		fire_amount = current_fire_ammo_amount
 	timer.connect("timeout",self,"reloaded")
 
 func reloaded():
