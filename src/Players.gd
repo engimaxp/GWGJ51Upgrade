@@ -98,6 +98,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		print("die")
 		health_proxy.final_big_explode(get_parent())
 		yield(get_tree().create_timer(3.0),"timeout")
+		Game.reset_game()
 		get_tree().reload_current_scene()
 #		self.queue_free()
 

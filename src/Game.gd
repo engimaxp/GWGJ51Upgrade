@@ -10,6 +10,7 @@ var current_wave = 1
 
 signal NextWave
 signal OilChange(oil,max_oil)
+signal AmmoChange(ammo,max_ammo)
 
 var pause = false
 

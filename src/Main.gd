@@ -13,11 +13,13 @@ onready var enemies_spawner = $EnemiesSpawner
 
 export(NodePath) var time_text_path
 export(NodePath) var oil_text_path
+export(NodePath) var ammo_text_path
 export(NodePath) var confirm_button_path
 export(NodePath) var error_text_path
 
 onready var time_text = get_node(time_text_path)
 onready var oil_text = get_node(oil_text_path)
+onready var ammo_text = get_node(ammo_text_path)
 onready var confirm_button = get_node(confirm_button_path)
 onready var error_text = get_node(error_text_path)
 
@@ -41,9 +43,13 @@ func _ready():
 	plan_show(false)
 	
 	Game.connect("OilChange",self,"OilChange")
+	Game.connect("AmmoChange",self,"AmmoChange")
 
 func OilChange(oil,max_oil):
 	oil_text.bbcode_text = "[right]%d/%d[/right]" % [int(oil),int(max_oil)]
+
+func AmmoChange(ammo,max_ammo):
+	ammo_text.bbcode_text = "[right]%d/%d[/right]" % [int(ammo),int(max_ammo)]
 
 func round_timer_up():
 	plan_show(true)
@@ -137,3 +143,8 @@ func _on_Confirm_pressed():
 		timer.start()
 	else:
 		error_text.bbcode_text = "[right]%s[/right]" % error_message
+
+
+func _on_Restart_pressed():
+	Game.reset_game()
+	get_tree().reload_current_scene()

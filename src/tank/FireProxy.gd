@@ -17,6 +17,11 @@ func set_can_fire(val):
 	can_fire = val
 	if can_fire:
 		fire_amount = current_fire_ammo_amount
+	if not is_enemy:
+		if not can_fire:
+			Game.emit_signal("AmmoChange",0,current_fire_ammo_amount)
+		else:
+			Game.emit_signal("AmmoChange",fire_amount,current_fire_ammo_amount)
 
 func fire_bullet():
 	if fire_lock:
@@ -36,6 +41,8 @@ func fire_bullet():
 	bullet.fire_to_layer = fire_to_layer
 	get_tree().current_scene.add_child(bullet)
 	fire_amount -= 1
+	if not is_enemy:
+		Game.emit_signal("AmmoChange",fire_amount,current_fire_ammo_amount)
 	if is_instance_valid(timer):
 		if is_enemy:
 			timer.wait_time = rand_range(6,20)
